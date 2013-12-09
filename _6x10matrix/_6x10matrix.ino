@@ -1,25 +1,6 @@
 #include "SPI.h"
 #include "WS2801.h"
 
-/*****************************************************************************
-The LED matrix is setup with X horizontal, Y vertical.  
-(1,1) in the left, bottom corner.  (maxX, maxY in the top right).  
-
-The lights are strung with i=1 being in the bottom right and weaving up and down
-until it reaches numberLEDs.  
-
-                         _   _   _
-    i = numberLEDs --.> | |_| |_| | <.- i=1
-
-
- WIRE PINOUTS:
-             RED    - VCC (5V DC)
-             YELLOW - GND (Connect to both supply and Arduino)
-             GREEN  - DATA
-             BLUE   - CLOCK
-             
-*****************************************************************************/
-
 int numberLEDs = 60;
 int maxX = 6;
 int maxY = 10;
@@ -43,6 +24,15 @@ void loop() {
   SpheroDisplay.show();
   delay(200);
   **/
+  
+  
+  
+  //********************* -  Simple XY Fills
+  /**
+  fillMatrixCols(5,Color(random(255), random(255), random(255)));
+  fillMatrixRows(5,Color(random(255), random(255), random(255)));
+  **/
+
 
 
   //********************* -  Color Wipe Examples
@@ -54,11 +44,13 @@ void loop() {
   **/
   
   
+  
   //********************* -  Rainbow Examples
   /** 
      rainbow(9);
      rainbowCycle(10);
   **/
+  
   
   //********************* -  Other Examples
   // hop(25);
@@ -109,6 +101,26 @@ void hop(uint8_t wait) {
     colorWipeUniform(Color(0,0,0),0);
 }
 
+void fillMatrixCols(uint8_t wait, uint32_t c){
+    for(int x=1;x<=maxX;x++){
+    for(int y=1;y<=maxY;y++){
+      SpheroDisplay.setPixelColor(xyPlot(x,y), c);
+      SpheroDisplay.show();
+      delay(wait);
+    }
+  }
+}
+   
+void fillMatrixRows(uint8_t wait, uint32_t c){
+    for(int y=1;y<=maxY;y++){
+    for(int x=1;x<=maxX;x++){
+      SpheroDisplay.setPixelColor(xyPlot(x,y), c);
+      SpheroDisplay.show();
+      delay(wait);
+    }
+  }
+}  
+
 // wipe the entire chain one by one.
 void colorWipe(uint32_t c, uint8_t wait) {
   int i;
@@ -137,9 +149,7 @@ void colorWipeUniform(uint32_t c, uint8_t wait) {
 
 int xyPlot(uint8_t X, uint8_t Y)
 {
-  int i = 0;
-  i = ((X % 2) ? (maxX*maxY+1)-((X-1)*maxY+Y) : (maxX*maxY+1)-(X*maxY-(Y-1)));
-  return i-1;
+   return ((X % 2) ? (maxX*maxY+1)-((X-1)*maxY+Y)-1 : (maxX*maxY+1)-(X*maxY-(Y-1))-1);
 }
 
 // Create a 24 bit color value from R,G,B
