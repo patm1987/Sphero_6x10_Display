@@ -14,14 +14,11 @@
  	typedef void(*vSyncCallback)(void*);
 
  	// retrieve screen dimensions
- 	virtual int getPixelDepth() = 0;
- 	virtual int getStride() = 0;
- 	virtual int getPixelWidth() = 0;
- 	virtual int getPixelHeight() = 0;
+ 	virtual int getPixelDepth() const = 0;
+ 	virtual int getStride() const = 0;
+ 	virtual int getPixelWidth() const = 0;
+ 	virtual int getPixelHeight() const = 0;
 
- 	// easy modifiers
- 	virtual void setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b) = 0;
- 	virtual void setPixelColor(uint16_t n, uint32_t c) = 0;
  	virtual void setPixelColor(uint16_t x, uint16_t y, uint32_t c) = 0;
 
  	// fast direct framebuffer access
