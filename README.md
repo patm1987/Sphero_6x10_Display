@@ -19,5 +19,11 @@ In this particular setup, we have 60 Total.  maxX = 6 and maxY = 10;
 * GREEN  - DATA
 * BLUE   - CLOCK
 																						   
+## PJM - design
 
-																							   
+DisplayMatrix abstracts either a WS2801 backend or a "test" backend
+GLDisplayMatrix is a test backend written in SFML
+WS2801DisplayMatrix will wrap WS2801
+
+I expose a raw byte buffer for faster blitting when desired
+I expose a vsync callback function to be called at some predetermined refresh rate																	   
